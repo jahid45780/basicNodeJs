@@ -49,4 +49,25 @@ let text = "how are you developer"
 const readStream = fs.createReadStream('./hello.txt',{ encoding: 'utf8'})
 const witeStream = fs.createWriteStream ('./hello_word.txt', {encoding: 'utf-8'})
 
+readStream.on('data',(data)=>{
+     console.log(data);
 
+     witeStream.write(data, (err)=>{
+          if(err){
+             throw Error('error!!', err)
+          }
+     })
+})
+
+readStream.on('error',(err)=>{
+    throw Error('error.', err)
+})
+
+readStream.on('end',()=>{
+     console.log('reading end');
+     witeStream.end()
+})
+
+witeStream.on('finish', ()=>{
+     console.log('wite  now finished');
+})
